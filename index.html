@@ -63,6 +63,25 @@
       color: #f66;
     }
 
+    #play-again {
+      display: none;
+      margin: 20px auto 0;
+      padding: 12px 32px;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 1.2rem;
+      color: #111;
+      background: #8f8;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    #play-again:hover {
+      background: #bfb;
+      transform: scale(1.05);
+    }
+
     @keyframes fadeOut {
       to {
         opacity: 0;
@@ -104,6 +123,7 @@
   </div>
 
   <div id="game-over">Game Over! Final Score: <span id="final-score"></span></div>
+  <button id="play-again" type="button">Play Again</button>
 
   <script>
     const holes = document.querySelectorAll('.hole');
@@ -111,6 +131,7 @@
     const timerDisplay = document.getElementById('timer');
     const gameOverDisplay = document.getElementById('game-over');
     const finalScoreDisplay = document.getElementById('final-score');
+    const playAgainBtn = document.getElementById('play-again');
 
     let score = 0;
     let timeLeft = 30;
@@ -168,7 +189,23 @@
       gameActive = false;
       gameOverDisplay.style.display = 'block';
       finalScoreDisplay.textContent = score;
+      playAgainBtn.style.display = 'block';
     }
+
+    // Reset everything and start a new round
+    function resetGame() {
+      score = 0;
+      timeLeft = 30;
+      gameActive = true;
+      scoreDisplay.textContent = 'Score: 0';
+      timerDisplay.textContent = 'Time: 30';
+      holes.forEach(hole => hole.innerHTML = '');
+      gameOverDisplay.style.display = 'none';
+      playAgainBtn.style.display = 'none';
+      startGame();
+    }
+
+    playAgainBtn.addEventListener('click', resetGame);
 
     startGame();
   </script>
